@@ -1,0 +1,17 @@
+{
+  "name": "summaly",
+  "version": "4.0.2",
+  "description": "Get web page's summary",
+  "author": "syuilo <syuilotan@yahoo.co.jp>",
+  "license": "MIT",
+  "packageManager": "pnpm@8.11.0",
+  "scripts": {},
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20230511.0"
+  },
+  "dependencies": {
+    "cheerio": "1.0.0-rc.12",
+    "hono": "^3.10.2",
+    "wrangler": "^3.17.1"
+  }
+}
