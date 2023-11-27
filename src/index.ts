@@ -87,18 +87,18 @@ async function process(context: Context) {
 		});
 	}
 
-	//try {
+	try {
 		const summary = await summaly(url, {
 			lang: context.req.query('lang') as string,
 			followRedirects: false
 		});
 
 		return context.json(summary);
-	/*} catch (e) {
+	} catch (e) {
 		return context.json({
 			error: e
 		});
-	}*/
+	}
 }
 
 app.get('/', process);
