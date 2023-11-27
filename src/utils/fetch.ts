@@ -4,6 +4,7 @@ import { detectEncoding, toUtf8 } from './encoding.js';
 import * as cheerio from 'cheerio';
 import repo from '../../package.json';
 import { streamToArrayBuffer, streamToString } from './misc';
+import contentType from 'content-type';
 
 const RESPONSE_TIMEOUT = 20 * 1000;
 const OPERATION_TIMEOUT = 60 * 1000;
@@ -28,8 +29,32 @@ export async function scpaping(url: string, opts?: { lang?: string; }) {
         throw new Error('Got wrong content type response');
     }
 
-    const body = await response.text();
-    const $ = cheerio.load(body);
+    let body = Buffer.from(await streamToArrayBuffer(response.body));
+    let $ = cheerio.load(body);
+    let foundCharset = null;
+
+    // metaタグから文字エンコーディングを探す
+    const metaCharsetTags = $('meta[charset]');
+    if (metaCharsetTags) {
+        const charset = metaCharsetTags.attr('charset');
+        if (charset) {
+            if (charset.toLowerCase() !== 'utf-8') {
+                foundCharset = charset.toLowerCase();
+            }
+        }
+    } else {
+        // なければヘッダから探す
+        if (response.headers.get('Content-Type') !== null) {
+            const ct = contentType.parse(response.headers.get('Content-Type')!);
+            if (ct.parameters.charset !== 'utf-8') {
+                foundCharset = ct.parameters.charset;
+            }
+        }
+    }
+    
+    if (foundCharset) {
+        $ = cheerio.load(toUtf8(Buffer.from(body), foundCharset));
+    }
 
     return {
         body,

@@ -6,9 +6,6 @@ Rewrite version of [summaly](https://github.com/misskey-dev/summaly).
 2. `pnpm wrangler login` (if needed)
 3. `pnpm wrangler deploy`
 
-# Restrcictments
-- Some sites which uses non-standard encoding (ex. Shift_JIS, EUC-JP) will not be summarized correctly. We only support UTF-8 encoding.
-
 # Copyright
 Copyright (c) 2016-2019 syuilo, 2023 CyberRex<br>
 MIT License
