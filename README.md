@@ -1,5 +1,5 @@
 # Summaly server for Cloudflare Workers
-Rewrite version of [summaly](https://github.com/misskey-dev/summaly).
+Rewrite version of [misskey-dev/summaly](https://github.com/misskey-dev/summaly).
 
 # How to use
 1. `pnpm i`
