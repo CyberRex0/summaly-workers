@@ -5,6 +5,7 @@ Rewrite version of [misskey-dev/summaly](https://github.com/misskey-dev/summaly)
 1. `pnpm i`
 2. `pnpm wrangler login` (if needed)
 3. `pnpm wrangler deploy`
+4. Set `https://address.to.summaly` as summaly proxy in settings of misskey
 
 # Copyright
 Copyright (c) 2016-2019 syuilo, 2023 CyberRex<br>
