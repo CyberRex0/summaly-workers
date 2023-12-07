@@ -96,7 +96,7 @@ async function process(context: Context) {
 		return context.json(summary);
 	} catch (e) {
 		return context.json({
-			error: e
+			error: e.toString()
 		});
 	}
 }
