@@ -10,6 +10,7 @@ const RESPONSE_TIMEOUT = 20 * 1000;
 const OPERATION_TIMEOUT = 60 * 1000;
 const MAX_RESPONSE_SIZE = 10 * 1024 * 1024;
 const BOT_UA = `SummalyBot/${repo.version}`;
+const metaHttpEquivRegex = new RegExp(/charset=([A-Za-z0-9\-]+)/);
 
 export async function scpaping(url: string, opts?: { lang?: string; }) {
     const response = await fetch(url, {
@@ -35,11 +36,24 @@ export async function scpaping(url: string, opts?: { lang?: string; }) {
 
     // metaタグから文字エンコーディングを探す
     const metaCharsetTags = $('meta[charset]');
-    if (metaCharsetTags) {
+    const metaHttpEquivTags = $('meta[http-equiv="content-type"]');
+    if (metaCharsetTags.length > 0) {
         const charset = metaCharsetTags.attr('charset');
         if (charset) {
             if (charset.toLowerCase() !== 'utf-8') {
                 foundCharset = charset.toLowerCase();
+            }
+        }
+    } else if (metaHttpEquivTags.length > 0) {
+        // <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> を探す
+        const content = metaHttpEquivTags.attr('content');
+        if (content) {
+            const match = metaHttpEquivRegex.exec(content);
+            if (match) {
+                const enc = match[1].toLowerCase();
+                if (enc !== 'utf-8') {
+                    foundCharset = enc;
+                }
             }
         }
     } else {
