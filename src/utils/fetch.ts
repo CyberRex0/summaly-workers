@@ -9,7 +9,7 @@ import contentType from 'content-type';
 const RESPONSE_TIMEOUT = 20 * 1000;
 const OPERATION_TIMEOUT = 60 * 1000;
 const MAX_RESPONSE_SIZE = 10 * 1024 * 1024;
-const BOT_UA = `SummalyBot/${repo.version}`;
+const BOT_UA = `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36`;
 const metaHttpEquivRegex = new RegExp(/charset=([A-Za-z0-9\-]+)/);
 
 export async function scpaping(url: string, opts?: { lang?: string; }) {
