@@ -22,7 +22,7 @@ async function getOEmbedPlayer($: cheerio.CheerioAPI, pageUrl: string): Promise<
 	const oEmbedUrl = (() => {
 		try {
 			return new URL(href, pageUrl);
-		} catch { return null }
+		} catch { return null; }
 	})();
 	if (!oEmbedUrl) {
 		return null;
@@ -36,7 +36,7 @@ async function getOEmbedPlayer($: cheerio.CheerioAPI, pageUrl: string): Promise<
 	const body = (() => {
 		try {
 			return JSON.parse(oEmbed);
-		} catch {}
+		} catch { /* empty */ }
 	})();
 
 	if (!body || body.version !== '1.0' || !['rich', 'video'].includes(body.type)) {
@@ -50,7 +50,7 @@ async function getOEmbedPlayer($: cheerio.CheerioAPI, pageUrl: string): Promise<
 	}
 
 	const oEmbedHtml = cheerio.load(body.html);
-	const iframe = oEmbedHtml("iframe");
+	const iframe = oEmbedHtml('iframe');
 
 	if (iframe.length !== 1) {
 		// Somehow we either have multiple iframes or none
@@ -126,8 +126,8 @@ async function getOEmbedPlayer($: cheerio.CheerioAPI, pageUrl: string): Promise<
 		url,
 		width,
 		height,
-		allow: allowedPermissions
-	}
+		allow: allowedPermissions,
+	};
 }
 
 export default async (_url: URL | string, lang: string | null = null): Promise<Summary | null> => {
@@ -191,10 +191,10 @@ export default async (_url: URL | string, lang: string | null = null): Promise<S
 		description = null;
 	}
 
-	let siteName = decodeHtml(
+	const siteName = decodeHtml(
 		$('meta[property="og:site_name"]').attr('content') ||
 		$('meta[name="application-name"]').attr('content') ||
-		url.hostname
+		url.host
 	);
 
 	const favicon =
@@ -205,7 +205,7 @@ export default async (_url: URL | string, lang: string | null = null): Promise<S
 	const activityPub =
 		$('link[rel="alternate"][type="application/activity+json"]').attr('href') || null;
 
-	const sensitive = $('.tweet').attr('data-possibly-sensitive') === 'true'
+	const sensitive = $('meta[property=\'mixi:content-rating\']').attr('content') === '1';
 
 	const find = async (path: string) => {
 		const target = new URL(path, url.href);
@@ -219,12 +219,12 @@ export default async (_url: URL | string, lang: string | null = null): Promise<S
 
 	const getIcon = async () => {
 		return (await find(favicon)) || null;
-	}
+	};
 
 	const [icon, oEmbed] = await Promise.all([
 		getIcon(),
 		getOEmbedPlayer($, url.href),
-	])
+	]);
 
 	// Clean up the title
 	title = cleanupTitle(title, siteName);

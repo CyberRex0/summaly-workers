@@ -16,7 +16,7 @@ export async function summarize(url: URL): Promise<summary> {
 	body = JSON.parse(body);
 
 	if (!('query' in body) || !('pages' in body.query)) {
-		throw 'fetch failed';
+		throw new Error('fetch failed');
 	}
 
 	const info = body.query.pages[Object.keys(body.query.pages)[0]];

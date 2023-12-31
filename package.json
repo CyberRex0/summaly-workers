@@ -1,23 +1,23 @@
 {
   "name": "summaly",
-  "version": "4.0.2",
+  "version": "5.0.4",
   "description": "Get web page's summary",
   "author": "syuilo <syuilotan@yahoo.co.jp>",
   "license": "MIT",
-  "packageManager": "pnpm@8.11.0",
+  "packageManager": "pnpm@8.13.1",
   "scripts": {},
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20231121.0",
+    "@cloudflare/workers-types": "^4.20231218.0",
     "@types/content-type": "^1.1.8"
   },
   "dependencies": {
     "cheerio": "1.0.0-rc.12",
     "content-type": "^1.0.5",
     "escape-regexp": "^0.0.1",
-    "hono": "^3.11.3",
+    "hono": "^3.11.11",
     "html-entities": "^2.4.0",
     "iconv-lite": "^0.6.3",
     "jschardet": "^3.0.0",
-    "wrangler": "^3.19.0"
+    "wrangler": "^3.22.1"
   }
 }

@@ -1,18 +1,13 @@
 type Summary = {
 	/**
-	 * The description of that web page
+	 * The title of that web page
 	 */
-	description: string | null;
-
+	title: string | null;
+	
 	/**
 	 * The url of the icon of that web page
 	 */
 	icon: string | null;
-
-	/**
-	 * The name of site of that web page
-	 */
-	sitename: string | null;
 
 	/**
 	 * The url of the thumbnail of that web page
@@ -20,14 +15,9 @@ type Summary = {
 	thumbnail: string | null;
 
 	/**
-	 * The player of that web page
+	 * The description of that web page
 	 */
-	player: Player;
-
-	/**
-	 * The title of that web page
-	 */
-	title: string | null;
+	description: string | null;
 
 	/**
 	 * Possibly sensitive
@@ -35,9 +25,26 @@ type Summary = {
 	sensitive?: boolean;
 
 	/**
+	 * The name of site of that web page
+	 */
+	sitename: string | null;
+
+	/**
+	 * The player of that web page
+	 */
+	player: Player;
+
+	/**
 	 * The url of the ActivityPub representation of that web page
 	 */
 	activityPub: string | null;
+};
+
+export type SummalyResult = Summary & {
+	/**
+	 * The actual url of that web page
+	 */
+	url: string;
 };
 
 export default Summary;
